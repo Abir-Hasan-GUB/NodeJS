@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>Version: <span id="version"></span> </h1>
+    <h1>Architecture: <span id="arch"></span> </h1>
+    <h1>CPU: <span id="cpu"></span> </h1>
+    <h1>Up Time: <span id="upTime"></span> </h1>
+
+    <button id="button">Click to show information</button>
+    <script src="OS.js"></script>
+    <script>
+        const button = document.getElementById("button");
+
+        const os = require('os');
+        const arch = os.arch();
+        const cpu = os.cpu();
+
+        const upTime = parseFloat((os.uptime() / 60) / 60);
+        const version = os.version();
+
+        button.addEventListener('click', () => {
+            console.log("CLick")
+            document.getElementById('arch').innerHTML = arch;
+            document.getElementById('version').innerHTML = version;
+            document.getElementById('cpu').innerHTML = cpu;
+            document.getElementById('upTime').innerHTML = upTime + "hours";
+        })
+    </script>
+</body>
+
+</html>
