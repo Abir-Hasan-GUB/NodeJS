@@ -5,40 +5,26 @@ const PORT = process.env.PORT || 8080;
 const fs = require('fs');
 const morgan = require('morgan');
 const middleware = [tinnyLogger()];
-app.use(middleware);
 const userRouter = require('./userRoute');
 const PostRoute = require('./PostRoute');
 const commonRouter = require('./commonRouter');
-commonRouter(app, morgan, PORT,fs);
+const blockedMiddleWare = require('./blockedMiddleware');
 
 // User Route (Custom multidimentonal Route)
-app.use('/user' , userRouter)
-app.use('/posts', PostRoute)
+app.use('/user' , userRouter) //create router group of user
+app.use('/posts', PostRoute) //create router group of post
 
+//custom middleware
 function tinnyLogger(){
     return (req, res, next) => {
-        // console.log(`Tinny Logger: ${req.url} - ${req.method}`)
+        console.log(`From Tinny Logger: ${req.url} - ${req.method}`)
         next();
     }
 }
 
+app.use(blockedMiddleWare) //call custom middleware function
+app.use(middleware); // print request information by this middleware
+commonRouter(app, morgan, PORT,fs); // call commonRouter
+notFound(app); // call not found router
 
-app.get('/products/:prodId', (req, res) => {
-    console.log(req.query)
-    res.send("Enterd ID is ==> " + req.params.prodId);
-})
-
-function customMidddleware(req, res, next){
-    // console.log("Looged In from Custom Middleware!");
-
-    if(req.url === '/hello'){
-        // console.log(req.url);
-        res.send('This page blocked by Admin');
-    }else next();
-}
-
-app.use(customMidddleware)
-
-
-notFound(app);
-app.listen(PORT)
+app.listen(PORT) //initialize port

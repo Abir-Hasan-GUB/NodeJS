@@ -1,21 +1,15 @@
 const router = require('express').Router();
+const { 
+    getPost,
+    sendPost,
+    deletePost,
+    updatePost
+} = require('./RouterController');
 
-router.get('/', (req, res) => {
-    res.send("Render All Post");
-})
-
-router.post('/', (req, res) => {
-    res.send("Create New Post");
-})
-
-router.delete('/:postId', (req, res) => {
-    console.log(req.query)
-    res.send("Delete Post on id: " + req.params.postId);
-})
-
-router.put('/:postId', (req, res) => {
-    res.send("Post Updated ! on id: " + req.params.postId);
-})
-
+// *** here only do refferance of eveery function. Not call them ***
+router.get('/', getPost)
+router.post('/', sendPost)
+router.delete('/:postId', deletePost)
+router.put('/:postId', updatePost)
 
 module.exports = router;
