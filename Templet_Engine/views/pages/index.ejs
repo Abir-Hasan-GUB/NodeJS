@@ -1,0 +1,27 @@
+<%- include('./partials/htmlformat1.ejs') %> 
+    <%- include('./partials/nav.ejs') %> 
+    <h1>EJS is a awesome Template ENgine</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid id maiores accusantium sed ullam nihil,
+        corporis harum neque quas ipsum minima maxime aspernatur autem dicta non unde? Molestiae, accusantium
+        laudantium.</p>
+
+    <h5><%= new Date().toString() %> </h5>
+
+    <% if(post.publisched) { %>
+    <h4>Title: <%= post.title %></h4>
+    <h4>Body: <%= post.body %></h4>
+    <% } else { %>
+    <h4>Post is not published yet! </h4>
+    <% } %>
+
+    <ul>
+       <% if(posts.length > 0) { %> 
+        <% for(p of posts) { %> 
+            <li><%= p.title %> by <%= p.author %></li>
+       <% } %>
+        <% } else { %> 
+            <h2>*** No data avilable !!!</h2>
+       <% } %> 
+    </ul>
+
+    <%- include('./partials/htmlformat2.ejs') %> 
